@@ -1,0 +1,17 @@
+body {
+    background-image: url("background.jpg"); /* Ensure the image is inside static/ */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+}
+
+#button{
+    width: 100px;
+    background-color: rgb(110, 237, 112);
+    border-radius: 10px;
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 5px;
+}

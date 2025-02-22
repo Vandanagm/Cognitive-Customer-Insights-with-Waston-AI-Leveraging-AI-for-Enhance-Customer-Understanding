@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            
+            font-family: Arial, sans-serif;
+            margin: 130px;
+            padding: 20px;
+           text-align: center;
+           
+        }
+        form {
+            margin-bottom: 20px;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+           
+        }
+        input, textarea, button {
+            background-color: transparent;
+            color:white;
+            border: 2px solid white;
+            margin: 5px;
+            padding: 10px;
+            width: 20%;
+            
+        }
+        input::placeholder, textarea::placeholder{
+            color: black;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product Sentiment Analysis</h1>
+    
+    <form id="feedbackForm">
+        <input type="text" id="username" name="username" placeholder="Enter your name" required><br>
+        <input type="text" id="product" name="product" placeholder="Enter product name" required><br>
+        <textarea id="feedback" name="feedback" placeholder="Enter your feedback" required></textarea><br>
+        <button type="submit" id="button" >Submit</button>
+    </form>
+
+    <h2>Sentiment Result</h2>
+    <p id="result"></p>
+
+    <a href="{{ url_for('sentiment_graph') }}">
+        <button style="padding: 10px 20px; background-color: #0e0aee; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+            View Sentiment Graph
+        </button>
+    </a>
+    
+
+    <script>
+        $(document).ready(function() {
+            $("#feedbackForm").submit(function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $("#result").html(`User: ${response.username} <br> 
+                                           Product: ${response.product} <br> 
+                                           Sentiment: ${response.sentiment}`);
+                    },
+                    error: function() {
+                        $("#result").html("Error processing feedback.");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
